@@ -7,7 +7,7 @@ function countOccurrences(arr) {
     const hashArray = new Array(n).fill(0);
 
     for (let i = 0; i < arr.length; i++) {
-       hashArray[arr[i]] += 1;
+        hashArray[arr[i]] += 1;
     }
 
     return hashArray;
@@ -99,7 +99,7 @@ function findSecondSmallest(arr) {
         } else if (arr[i] > smallest && arr[i] < secondSmallest) {
             secondSmallest = arr[i];
         }
-    } 
+    }
 
     return secondSmallest !== Infinity ? secondSmallest : -1;
 }
@@ -109,3 +109,67 @@ function findSecondSmallest(arr) {
 
 // T.C = O(n)
 // S.C = O(1) 
+
+// 5: Left rotate elements by n places
+// [1, 2, 3, 5, 4] => [3, 5, 4, 5, 4] => [3, 5, 4, 1, 2]
+
+// [2, 1, 3, 5, 4] => [2, 1, 4, 5, 3] => [3, 4, 5, 1, 2]
+
+// Brute force
+
+function rotateTheArray(arr, n) {
+    let length = arr.length;
+
+    if (length <= 1) return arr;
+
+    const initialValues = arr.slice(0, n); // O(n)
+
+    for (let i = n; i < length; i++) {
+        arr[i - n] = arr[i];
+    } // O(length - n)
+
+    let j = 0
+    for (let i = length - n; i < length; i++) {
+        arr[i] = initialValues[i - (length - n)]
+        j++;
+    } // O(n)
+
+    return arr;
+}
+console.log(rotateTheArray([1, 2, 3, 5, 4], 2));
+
+// T.C = O(n + length - n + n) = O(length + n);
+// S.c = o(n)
+
+// Optimal Solution
+
+function reverseTheArray(arr, start, end) {
+    while (start < end) {
+        [arr[start], arr[end]] = [arr[end], arr[start]];
+        start++;
+        end--;
+    }
+}
+
+function rotateTheArray2(arr, n) {
+    let length = arr.length;
+    if (length <= 1) return arr;
+
+    n = n % length;
+    if (n === 0) return arr;
+
+    reverseTheArray(arr, 0, n - 1); // O(n/2)
+    reverseTheArray(arr, n, length - 1); // O(length - n)/2
+    reverseTheArray(arr, 0, length - 1) // O(length)
+
+    return arr;
+}
+
+console.log(rotateTheArray2([1, 2, 3, 5, 4], 2));
+
+// t.c = n/2 + (length - n)/2 + length/2
+// t.c = (n + length - n + length)/2 
+// t.c = length
+//S.C = O(1)
+
+
