@@ -136,8 +136,8 @@ function rotateTheArray(arr, n) {
 
     return arr;
 }
-console.log(rotateTheArray([1, 2, 3, 5, 4], 2));
 
+// console.log(rotateTheArray([1, 2, 3, 5, 4], 2));
 // T.C = O(n + length - n + n) = O(length + n);
 // S.c = o(n)
 
@@ -165,11 +165,71 @@ function rotateTheArray2(arr, n) {
     return arr;
 }
 
-console.log(rotateTheArray2([1, 2, 3, 5, 4], 2));
-
+// console.log(rotateTheArray2([1, 2, 3, 5, 4], 2));
 // t.c = n/2 + (length - n)/2 + length/2
 // t.c = (n + length - n + length)/2 
 // t.c = length
 //S.C = O(1)
 
+// 6: Move zeros to end
 
+// Brute Force
+function moveZeros(arr) {
+    const n = arr.length;
+
+    if (n <= 1) return arr;
+    const temp = [];
+
+    for (let i = 0; i < n; i++) {
+        if (arr[i] !== 0) {
+            temp.push(arr[i])
+        }
+    }
+
+    for (let i = 0; i < temp.length; i++) {
+        arr[i] = temp[i]
+    }
+
+    for (let i = temp.length; i < n; i++) {
+        arr[i] = 0;
+    }
+
+    return arr;
+}
+
+console.log(moveZeros([1, 0, 5, 0, 3, 6, 9, 7, 0, 5, 0, 4, 0]));
+
+// T.C = O(n) + O(n) + O(n) = o(3n) = O(n)
+// S.c = O(n)
+
+// Optimal
+function moveZeros2(arr) {
+    const n = arr.length;
+
+    if (n <= 1) return arr;
+    let tempIndex = -1;
+
+    // get the first index whose value is 0
+    for (let i = 0; i < n; i++) {
+        if (arr[i] === 0) {
+            tempIndex = i;
+            break;
+        }
+    }
+
+    if (tempIndex === -1) return arr;
+
+    // swap the non zero with zero
+    for (let i = tempIndex + 1; i < n; i++) {
+        if (arr[i] !== 0) {
+            arr[tempIndex] = arr[i];
+            arr[i] = 0
+
+            tempIndex++;
+        }
+    }
+
+    return arr;
+}
+
+console.log(moveZeros2([1, 0, 5, 0, 3, 6, 9, 7, 0, 5, 0, 4, 5]));
