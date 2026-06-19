@@ -197,7 +197,7 @@ function moveZeros(arr) {
     return arr;
 }
 
-console.log(moveZeros([1, 0, 5, 0, 3, 6, 9, 7, 0, 5, 0, 4, 0]));
+// console.log(moveZeros([1, 0, 5, 0, 3, 6, 9, 7, 0, 5, 0, 4, 0]));
 
 // T.C = O(n) + O(n) + O(n) = o(3n) = O(n)
 // S.c = O(n)
@@ -215,7 +215,7 @@ function moveZeros2(arr) {
             tempIndex = i;
             break;
         }
-    }
+    } // O(n)
 
     if (tempIndex === -1) return arr;
 
@@ -227,9 +227,61 @@ function moveZeros2(arr) {
 
             tempIndex++;
         }
-    }
+    } // O(n - 1)
 
     return arr;
 }
 
-console.log(moveZeros2([1, 0, 5, 0, 3, 6, 9, 7, 0, 5, 0, 4, 5]));
+// console.log(moveZeros2([1, 0, 5, 0, 3, 6, 9, 7, 0, 5, 0, 4, 5]));
+
+// T.C = O(n) + O(n - 1) = O(n + n - 1) = O(2n - 1) = O(n)
+// S.C = O(1)
+
+// 7: Remove duplicates from the array
+
+// Brute force
+function removeDuplicate(arr) {
+    const n = arr.length;
+    if (n <= 1) return arr;
+
+    const uniqueElements = new Set(); 
+
+    for (let i = 0; i < n; i++) {
+        uniqueElements.add(arr[i]);
+    } // O(n)
+
+    let i = 0;
+    for (const value of uniqueElements) {
+        arr[i] = value;
+        i++;
+    } // O(n)
+
+    return {arr ,size:uniqueElements.size}
+}
+
+console.log(removeDuplicate([1,1,2,2,3,4,5,5]));
+
+// T.C: O(n) + O(n) = O(2n) = O(n)
+// S.C: O(n)
+
+// Optimal
+function removeDuplicate2(arr) {
+    const n = arr.length;
+    if (n <= 1) return arr;
+
+    let i = 0;
+
+    for (let j = 1; j < n; j++) {
+        if (arr[i] !== arr[j]) {
+            arr[i + 1] = arr[j];
+            i++
+        }
+    } // O(n - 1)
+
+    return {arr, size:(i + 1)}
+}
+
+console.log(removeDuplicate2([1,1,2,2,3,4,5,5]));
+
+// T.C: O(n - 1) = O(n)
+// S.C: O(1)
