@@ -286,7 +286,7 @@ function removeDuplicate2(arr) {
 // T.C: O(n - 1) = O(n)
 // S.C: O(1)
 
-// 9: Union two arrays
+// 8: Union two arrays
 
 // Brute force
 function unionArrays(arr1, arr2) {
@@ -313,7 +313,7 @@ function unionArrays(arr1, arr2) {
     return newArray;
 }
 
-console.log(unionArrays([1, 2, 5, 7, 7, 8], [1, 2, 5, 8, 9, 9]))
+// console.log(unionArrays([1, 2, 5, 7, 7, 8], [1, 2, 5, 8, 9, 9]))
 
 // T.C: O(len1 + len2) + O(len1) + O(len2) = O(len1 + len2)
 // S.C: O(len1 + len2)
@@ -365,7 +365,48 @@ function unionArrays2(arr1, arr2) {
     return newArray;
 }
 
-console.log(unionArrays2([1, 2, 5, 7, 7, 8], [1, 2, 5, 8, 9, 9]))
+// console.log(unionArrays2([1, 2, 5, 7, 7, 8], [1, 2, 5, 8, 9, 9]))
 
 // T.C: O(len1 + len2)
 // S.C: O(len1 + len2)
+
+// 9: Find the missing number in the array
+
+function finedMissing(arr, n) {
+    let hash = new Array(n + 1).fill(0);
+
+    for (let i = 0; i < arr.length; i++) {
+        hash[arr[i]] = 1;
+    }
+
+    for (let i = 1; i < hash.length; i++) {
+        if (hash[i] === 0) {
+            return i;
+        }
+    }
+
+    return -1
+}
+
+console.log(finedMissing([1,2,3,4,5,7], 7))
+
+// T.C: O(n - 1) + O(n + 1) = O(2n) = O(n);
+// S.C: O(n + 1) = O(n);
+
+// Optimal
+
+function finedMissing2(arr, n) {
+    const sum1 = (n * (n + 1))/2;
+    let sum2 = 0;
+
+    for (let i = 0; i < arr.length; i++) {
+        sum2 += arr[i];
+    }
+
+    return (sum1 - sum2);
+}
+
+console.log(finedMissing2([1,2,3,4,5,7], 7));
+
+// T.C: O(n - 1) = O(n)
+// S.C: O(1)
