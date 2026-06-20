@@ -244,7 +244,7 @@ function removeDuplicate(arr) {
     const n = arr.length;
     if (n <= 1) return arr;
 
-    const uniqueElements = new Set(); 
+    const uniqueElements = new Set();
 
     for (let i = 0; i < n; i++) {
         uniqueElements.add(arr[i]);
@@ -256,10 +256,10 @@ function removeDuplicate(arr) {
         i++;
     } // O(n)
 
-    return {arr ,size:uniqueElements.size}
+    return { arr, size: uniqueElements.size }
 }
 
-console.log(removeDuplicate([1,1,2,2,3,4,5,5]));
+// console.log(removeDuplicate([1,1,2,2,3,4,5,5]));
 
 // T.C: O(n) + O(n) = O(2n) = O(n)
 // S.C: O(n)
@@ -278,10 +278,94 @@ function removeDuplicate2(arr) {
         }
     } // O(n - 1)
 
-    return {arr, size:(i + 1)}
+    return { arr, size: (i + 1) }
 }
 
-console.log(removeDuplicate2([1,1,2,2,3,4,5,5]));
+// console.log(removeDuplicate2([1,1,2,2,3,4,5,5]));
 
 // T.C: O(n - 1) = O(n)
 // S.C: O(1)
+
+// 9: Union two arrays
+
+// Brute force
+function unionArrays(arr1, arr2) {
+    const len1 = arr1.length;
+    const len2 = arr2.length;
+
+    if (len1 === 0 || len2 === 0) return [];
+
+    const uniqueElements = new Set(); // O(len1 + len2)
+    const newArray = [] // O(len1 + len2)
+
+    for (let i = 0; i < len1; i++) {
+        uniqueElements.add(arr1[i])
+    } // O(len1)
+
+    for (let i = 0; i < len2; i++) {
+        uniqueElements.add(arr2[i])
+    } // O(len2)
+
+    for (const value of uniqueElements) {
+        newArray.push(value);
+    } // O(len1 + len2)
+
+    return newArray;
+}
+
+console.log(unionArrays([1, 2, 5, 7, 7, 8], [1, 2, 5, 8, 9, 9]))
+
+// T.C: O(len1 + len2) + O(len1) + O(len2) = O(len1 + len2)
+// S.C: O(len1 + len2)
+
+// Optimal
+
+function unionArrays2(arr1, arr2) {
+    const len1 = arr1.length;
+    const len2 = arr2.length;
+
+    if (len1 === 0 && len2 === 0) return [];
+
+    const newArray = [];
+    let i = 0;
+    let j = 0;
+
+    while (i < len1 && j < len2) {
+        if (arr1[i] <= arr2[j]) {
+            if (newArray.length === 0 || newArray[newArray.length - 1] !== arr1[i]) {
+                newArray.push(arr1[i]);
+            }
+
+            i++;
+        } else {
+            if (newArray.length === 0 || newArray[newArray.length - 1] !== arr2[j]) {
+                newArray.push(arr2[j]);
+            }
+
+            j++;
+        }
+    }
+
+    while (i < len1) {
+        if (newArray[newArray.length - 1] !== arr1[i]) {
+            newArray.push(arr1[i]);
+        }
+
+        i++;
+    }
+
+    while (j < len2) {
+        if (newArray[newArray.length - 1] !== arr2[j]) {
+            newArray.push(arr2[j]);
+        }
+
+        j++;
+    }
+
+    return newArray;
+}
+
+console.log(unionArrays2([1, 2, 5, 7, 7, 8], [1, 2, 5, 8, 9, 9]))
+
+// T.C: O(len1 + len2)
+// S.C: O(len1 + len2)
